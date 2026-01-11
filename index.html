@@ -1,55 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> World Search </title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        .search-box {
-            margin-top: 150px;
-        }
-
-        input[type="text"] {
-            width: 50%;
-            padding: 15px;
-            font-size: 20px;
-            border: 2px solid black;
-            border-radius: 30px;
-            outline: none;
-        }
-
-        button {
-            padding: 12px 25px;
-            font-size: 18px;
-            border: none;
-            border-radius: 25px;
-            background-color: #4285F4;
-            color: white;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        button:hover {
-            background-color: #357ae8;
-        }
-    </style>
+<title>Super Search Engine</title>
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    text-align:center;
+    padding:40px;
+}
+.search-box{
+    width:50%;
+    padding:15px 20px;
+    font-size:18px;
+    border:2px solid #000;
+    border-radius:30px;
+    outline:none;
+}
+.button{
+    padding:10px 25px;
+    margin:10px;
+    border:none;
+    cursor:pointer;
+    border-radius:20px;
+    font-size:16px;
+    background:black;
+    color:white;
+}
+</style>
 </head>
 <body>
-<h1>🌍 Every Thing Search </h1>
 
-    <div class="search-box">
-    <form action="https://www.google.com/search">
-  
-            <input type="text" name="q" placeholder="Search anything in the world...">
-            <button type="submit">Search</button>
-        </form>
-    </div>
+<h1>Super Search Engine</h1>
+
+<input id="query" class="search-box" placeholder="Search Anything...">
+
+<br><br>
+
+<button class="button" onclick="googleSearch()">Google</button>
+<button class="button" onclick="imageSearch()">Images</button>
+<button class="button" onclick="wikiSearch()">Wikipedia</button>
+<button class="button" onclick="ytSearch()">YouTube</button>
+<button class="button" onclick="githubSearch()">GitHub</button>
+<button class="button" onclick="newsSearch()">News</button>
+
+<script>
+function getQ(){ return document.getElementById("query").value; }
+
+function googleSearch(){
+    window.open("https://www.google.com/search?q=" + getQ());
+}
+
+function imageSearch(){
+    window.open("https://www.google.com/search?tbm=isch&q=" + getQ());
+}
+
+function wikiSearch(){
+    window.open("https://en.wikipedia.org/wiki/" + getQ());
+}
+
+function ytSearch(){
+    window.open("https://www.youtube.com/results?search_query=" + getQ());
+}
+
+function githubSearch(){
+    window.open("https://github.com/search?q=" + getQ());
+}
+
+function newsSearch(){
+    window.open("https://news.google.com/search?q=" + getQ());
+}
+</script>
 
 </body>
 </html>
