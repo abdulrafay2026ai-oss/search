@@ -1,266 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Super Search Engine</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Store — 50 Videos</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-/* ========== GLOBAL STYLE ========== */
-body{
-    margin:0;
-    padding:0;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
-    background-size: 300% 300%;
-    animation: bgMove 10s infinite alternate;
-    font-family: Arial, sans-serif;
-    text-align:center;
-    transition:0.4s;
-}
-
-/* Background Animation */
-@keyframes bgMove{
-    0%{background-position:0% 50%;}
-    100%{background-position:100% 50%;}
-}
-
-/* DARK MODE */
-.dark-mode{
-    background:#111;
-    color:white;
-}
-
-/* Dark Mode Toggle */
-#toggleMode{
-    position: absolute;
-    right:20px;
-    top:20px;
-    background:black;
-    color:white;
-    padding:8px 15px;
-    cursor:pointer;
-    border-radius:20px;
-    border:none;
-    transition:0.3s;
-}
-#toggleMode:hover{
-    transform:scale(1.1);
-}
-
-/* HEADER LOGO */
-.logo{
-    font-size:40px;
-    margin-top:40px;
-    font-weight:bold;
-}
-.logo span{
-    vertical-align:middle;
-}
-.logo img{
-    width:40px;
-    vertical-align:middle;
-    margin-right:5px;
-}
-
-/* Center Box */
-.container{
-    margin-top:40px;
-    background:white;
-    padding:40px;
-    width:60%;
-    border-radius:30px;
-    margin-left:auto;
-    margin-right:auto;
-    box-shadow:0 0 30px rgba(0,0,0,0.2);
-    transition:0.4s;
-}
-.dark-mode .container{
-    background:#222;
-    box-shadow:0 0 30px rgba(255,255,255,0.1);
-}
-
-/* Rainbow Title */
-.title span{
-    font-size:45px;
-    font-weight:bold;
-    display:inline-block;
-    animation: rainbow 3s infinite;
-    margin:0 2px;
-}
-
-@keyframes rainbow{
-    0%{color:red;}
-    20%{color:orange;}
-    40%{color:yellow;}
-    60%{color:green;}
-    80%{color:blue;}
-    100%{color:purple;}
-}
-
-/* Search Box */
-.search-box{
-    width:70%;
-    padding:18px;
-    font-size:20px;
-    border:2px solid #555;
-    border-radius:40px;
-    outline:none;
-    transition:0.3s;
-    box-shadow:0 0 12px rgba(0,0,0,0.15);
-}
-.search-box:focus{
-    border-color:#000;
-    box-shadow:0 0 25px rgba(0,0,0,0.3);
-}
-
-/* Main Search Button */
-.main-search-btn{
-    padding:15px 45px;
-    margin-top:20px;
-    border:none;
-    background:#0078ff;
-    color:white;
-    font-size:20px;
-    border-radius:40px;
-    cursor:pointer;
-    transition:0.3s;
-}
-.main-search-btn:hover{
-    background:#0059c9;
-    transform:scale(1.08);
-}
-
-/* Gradient Buttons */
-.button{
-    padding:12px 25px;
-    margin:10px;
-    border:none;
-    font-size:16px;
-    border-radius:25px;
-    cursor:pointer;
-    color:white;
-    background:linear-gradient(45deg, #ff512f, #dd2476);
-    transition:0.3s;
-}
-.button:hover{
-    transform:scale(1.15);
-}
-
-/* Voice Button */
-#voiceBtn{
-    margin-left:10px;
-    padding:12px 20px;
-    border:none;
-    background:black;
-    color:white;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:18px;
-}
-#voiceBtn:hover{
-    transform:scale(1.2);
-}
-
-/* Loading Animation */
-#loader{
-    margin-top:20px;
-    display:none;
-    font-size:20px;
-    font-weight:bold;
-}
+  body { font-family: 'Inter', sans-serif; background-color:#0a0a0b; color:#e2e8f0; margin:0; }
+  h1 { font-family: 'Cinzel', serif; }
+  .card:hover { transform: scale(1.05); transition:0.3s; }
+  .video-thumb { cursor:pointer; position:relative; overflow:hidden; border-radius:12px; }
+  .video-thumb img { width:100%; display:block; }
+  .play-button {
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:60px; height:60px;
+    background:url('https://i.imgur.com/TxzC70f.png') no-repeat center center;
+    background-size:contain;
+  }
+  #storyGrid { display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:1rem; padding:1rem; }
 </style>
 </head>
-
 <body>
 
-<!-- Dark Mode -->
-<button id="toggleMode" onclick="toggleDark()">Dark Mode</button>
-
-<!-- Logo -->
-<div class="logo">
-    <img src="https://cdn-icons-png.flaticon.com/512/954/954591.png">
-    <span>SUPER SEARCH ENGINE</span>
+<div class="text-center p-8 bg-gray-900 shadow-lg">
+  <h1 class="text-5xl font-cinzel text-white">Story Store</h1>
+  <p class="text-gray-300 mt-2">Search and watch your favorite stories!</p>
+  <div class="mt-4 flex justify-center gap-2">
+    <input id="searchBox" type="text" placeholder="Search videos..." class="px-4 py-2 rounded-lg text-black w-1/2 md:w-1/3 focus:outline-none"/>
+    <button id="searchBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Search</button>
+  </div>
 </div>
 
-<div class="container">
+<div id="storyGrid"></div>
 
-<!-- Rainbow Title -->
-<h1 class="title">
-    <span>S</span><span>u</span><span>p</span><span>e</span><span>r</span>
-    &nbsp;
-    <span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span>
-    &nbsp;
-    <span>E</span><span>n</span><span>g</span><span>i</span><span>n</span><span>e</span>
-</h1>
-
-<!-- Search Box -->
-<input id="query" class="search-box" placeholder="Search Anything...">
-
-<!-- Voice Search -->
-<button id="voiceBtn" onclick="startVoice()">🎤</button>
-
-<!-- Main Search -->
-<br>
-<button class="main-search-btn" onclick="mainSearch()">Search</button>
-
-<br><br>
-
-<!-- Category Buttons -->
-<button class="button" onclick="googleSearch()">Google</button>
-<button class="button" onclick="imageSearch()">Images</button>
-<button class="button" onclick="wikiSearch()">Wikipedia</button>
-<button class="button" onclick="ytSearch()">YouTube</button>
-<button class="button" onclick="githubSearch()">GitHub</button>
-<button class="button" onclick="newsSearch()">News</button>
-
-<!-- Loader -->
-<div id="loader">Searching...</div>
-
+<div class="text-center p-6 bg-gray-900 mt-8">
+  <p class="text-gray-400">© 2026 Story Store. All rights reserved.</p>
 </div>
-
-<!-- Footer -->
-<p style="margin-top:40px; font-weight:bold;">© 2026 Super Search Engine | Made by Abdul Rafay</p>
 
 <script>
-/* GET SEARCH TEXT */
-function getQ(){
-    return document.getElementById("query").value;
-}
+// ------------------------------
+// 1️⃣ List of 50 sample YouTube IDs (all embeddable)
+const videos = [
+  {id:"9ir_l7qTiZ4", title:"Story 1", desc:"Description for Story 1"},
+  {id:"dpnUYVezBVw", title:"Story 2", desc:"Description for Story 2"},
+  {id:"sJiw-edttDY", title:"Story 3", desc:"Description for Story 3"},
+  {id:"nrv495corBc", title:"Story 4", desc:"Description for Story 4"},
+  {id:"tSWNCNnvEA0", title:"Story 5", desc:"Description for Story 5"},
+  {id:"ULfatf1HNuU", title:"Story 6", desc:"Description for Story 6"},
+  {id:"CRHvTTOR8Ns", title:"Story 7", desc:"Description for Story 7"},
+  {id:"CkRdvGmcCBE", title:"Story 8", desc:"Description for Story 8"},
+  {id:"-4DSrSVorIM", title:"Story 9", desc:"Description for Story 9"},
+  {id:"nn9Tq7FruSI", title:"Story 10", desc:"Description for Story 10"},
+  {id:"36lZMy222Rk", title:"Story 11", desc:"Description for Story 11"},
+  {id:"Pjw2A3QU8Qg", title:"Story 12", desc:"Description for Story 12"},
+  {id:"F4HLrIHdldA", title:"Story 13", desc:"Description for Story 13"},
+  {id:"8npyD0jfQOk", title:"Story 14", desc:"Description for Story 14"},
+  {id:"QqQ8kdkk0Gg", title:"Story 15", desc:"Description for Story 15"},
+  {id:"FkL8j0wIRf8", title:"Story 16", desc:"Description for Story 16"},
+  {id:"i0bW1SfkOvc", title:"Story 17", desc:"Description for Story 17"},
+  {id:"ldvoJe-8WwU", title:"Story 18", desc:"Description for Story 18"},
+  {id:"QWM1_FQxD88", title:"Story 19", desc:"Description for Story 19"},
+  {id:"xs7rW19sbIc", title:"Story 20", desc:"Description for Story 20"},
+  {id:"9ir_l7qTiZ4", title:"Story 21", desc:"Description for Story 21"},
+  {id:"dpnUYVezBVw", title:"Story 22", desc:"Description for Story 22"},
+  {id:"sJiw-edttDY", title:"Story 23", desc:"Description for Story 23"},
+  {id:"nrv495corBc", title:"Story 24", desc:"Description for Story 24"},
+  {id:"tSWNCNnvEA0", title:"Story 25", desc:"Description for Story 25"},
+  {id:"ULfatf1HNuU", title:"Story 26", desc:"Description for Story 26"},
+  {id:"CRHvTTOR8Ns", title:"Story 27", desc:"Description for Story 27"},
+  {id:"CkRdvGmcCBE", title:"Story 28", desc:"Description for Story 28"},
+  {id:"-4DSrSVorIM", title:"Story 29", desc:"Description for Story 29"},
+  {id:"nn9Tq7FruSI", title:"Story 30", desc:"Description for Story 30"},
+  {id:"36lZMy222Rk", title:"Story 31", desc:"Description for Story 31"},
+  {id:"Pjw2A3QU8Qg", title:"Story 32", desc:"Description for Story 32"},
+  {id:"F4HLrIHdldA", title:"Story 33", desc:"Description for Story 33"},
+  {id:"8npyD0jfQOk", title:"Story 34", desc:"Description for Story 34"},
+  {id:"QqQ8kdkk0Gg", title:"Story 35", desc:"Description for Story 35"},
+  {id:"FkL8j0wIRf8", title:"Story 36", desc:"Description for Story 36"},
+  {id:"i0bW1SfkOvc", title:"Story 37", desc:"Description for Story 37"},
+  {id:"ldvoJe-8WwU", title:"Story 38", desc:"Description for Story 38"},
+  {id:"QWM1_FQxD88", title:"Story 39", desc:"Description for Story 39"},
+  {id:"xs7rW19sbIc", title:"Story 40", desc:"Description for Story 40"},
+  {id:"9ir_l7qTiZ4", title:"Story 41", desc:"Description for Story 41"},
+  {id:"dpnUYVezBVw", title:"Story 42", desc:"Description for Story 42"},
+  {id:"sJiw-edttDY", title:"Story 43", desc:"Description for Story 43"},
+  {id:"nrv495corBc", title:"Story 44", desc:"Description for Story 44"},
+  {id:"tSWNCNnvEA0", title:"Story 45", desc:"Description for Story 45"},
+  {id:"ULfatf1HNuU", title:"Story 46", desc:"Description for Story 46"},
+  {id:"CRHvTTOR8Ns", title:"Story 47", desc:"Description for Story 47"},
+  {id:"CkRdvGmcCBE", title:"Story 48", desc:"Description for Story 48"},
+  {id:"-4DSrSVorIM", title:"Story 49", desc:"Description for Story 49"},
+  {id:"nn9Tq7FruSI", title:"Story 50", desc:"Description for Story 50"}
+];
 
-/* SHOW LOADER */
-function showLoader(){
-    document.getElementById("loader").style.display="block";
-    setTimeout(()=>{document.getElementById("loader").style.display="none";},1500);
-}
+// ------------------------------
+// 2️⃣ Load 50 videos
+// ------------------------------
+const storyGrid = document.getElementById('storyGrid');
 
-/* MAIN SEARCH */
-function mainSearch(){
-    googleSearch();
-}
+videos.forEach(video=>{
+  const card = document.createElement('div');
+  card.className = 'card bg-gray-800 p-5 rounded-xl shadow-lg flex flex-col items-center';
+  card.setAttribute('data-title', video.title.toLowerCase());
+  card.setAttribute('data-desc', video.desc.toLowerCase());
+  card.innerHTML = `
+    <div class="video-thumb mb-4" data-id="${video.id}">
+      <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="${video.title}">
+      <div class="play-button"></div>
+    </div>
+    <h2 class="text-2xl font-cinzel mb-2 text-white">${video.title}</h2>
+    <p class="text-gray-300 mb-4">${video.desc}</p>
+  `;
+  storyGrid.appendChild(card);
+});
 
-/* SEARCH FUNCTIONS */
-function googleSearch(){ showLoader(); window.open("https://www.google.com/search?q="+getQ());}
-function imageSearch(){ showLoader(); window.open("https://www.google.com/search?tbm=isch&q="+getQ());}
-function wikiSearch(){ showLoader(); window.open("https://en.wikipedia.org/wiki/"+getQ());}
-function ytSearch(){ showLoader(); window.open("https://www.youtube.com/results?search_query="+getQ());}
-function githubSearch(){ showLoader(); window.open("https://github.com/search?q="+getQ());}
-function newsSearch(){ showLoader(); window.open("https://news.google.com/search?q="+getQ());}
+// ------------------------------
+// 3️⃣ Click-to-play
+// ------------------------------
+document.addEventListener('click', function(e){
+  const thumb = e.target.closest('.video-thumb');
+  if(thumb){
+    const videoID = thumb.getAttribute('data-id');
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${videoID}?rel=0&modestbranding=1`;
+    iframe.frameBorder = "0";
+    iframe.allow = "accelerometer; encrypted-media; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.style.width = "100%";
+    iframe.style.height = "250px";
+    thumb.innerHTML = '';
+    thumb.appendChild(iframe);
+  }
+});
 
-/* DARK MODE */
-function toggleDark(){
-    document.body.classList.toggle("dark-mode");
-}
+// ------------------------------
+// 4️⃣ Search
+// ------------------------------
+const searchBox = document.getElementById('searchBox');
+const searchBtn = document.getElementById('searchBtn');
 
-/* VOICE SEARCH */
-function startVoice(){
-    const rec = new webkitSpeechRecognition();
-    rec.lang = "en-US";
-    rec.start();
-
-    rec.onresult = function(e){
-        document.getElementById("query").value = e.results[0][0].transcript;
+function performSearch(){
+  const query = searchBox.value.toLowerCase();
+  const cards = document.querySelectorAll('#storyGrid .card');
+  let anyVisible = false;
+  cards.forEach(card=>{
+    const title = card.getAttribute('data-title');
+    const desc = card.getAttribute('data-desc');
+    if(title.includes(query) || desc.includes(query)){
+      card.style.display = 'flex';
+      anyVisible = true;
+    } else {
+      card.style.display = 'none';
     }
+  });
+  if(!anyVisible) alert('No videos found for: ' + searchBox.value);
 }
+
+searchBtn.addEventListener('click', performSearch);
+searchBox.addEventListener('keypress', function(e){
+  if(e.key==='Enter'){ e.preventDefault(); performSearch(); }
+});
 </script>
 
 </body>
